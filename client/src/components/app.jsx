@@ -21,13 +21,17 @@ class App extends React.Component {
   render() {
     return (
       <div id='houseSummary'>
-        <div id='houseDescription'>
-          <Address house={this.state.house} />
-          <HouseStats />
-          <Description house={this.state.house} />
+        <div id='addressPrice'>
+          <div id='addressStats'>
+            <Address house={this.state.house} />
+            <HouseStats />
+          </div>
+          <div id='housePrice'>
+            <Price />
+          </div>
         </div>
-        <div id='housePrice'>
-          <Price />
+        <div id='houseDescription'>
+          <Description house={this.state.house} />
         </div>
       </div>
     )

@@ -1,8 +1,20 @@
 #app {
-  font-family: Gotham,gotham,Verdana,sans-serif;
+  font-family: Verdana,sans-serif;
 }
 
 #houseSummary{
+  /* display: flex; */
+}
+
+#addressStats{
+  width: 500px;
+}
+
+#houseDescription {
+  width: 500px;
+}
+
+#addressPrice{
   display: flex;
 }
 
