@@ -2,7 +2,7 @@ import React from 'react';
 
 function HouseStats() {
   return (
-    <div>
+    <div id="houseStats">
       <div>4 beds</div>
       <div>3 baths</div>
       <div>2,848 sqft</div>
