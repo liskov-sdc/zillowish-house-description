@@ -15,14 +15,14 @@ const sequelize = new Sequelize('zillow', 'postgres', password, {
   },
 });
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// sequelize
+//   .authenticate()
+//   .then(() => {
+//     console.log('Connection has been established successfully.');
+//   })
+//   .catch(err => {
+//     console.error('Unable to connect to the database:', err);
+//   });
 
 const House = sequelize.define('house', {
   id: {
@@ -49,12 +49,12 @@ const House = sequelize.define('house', {
   }
 });
 
-House.sync({force: true}).then(() => {
-  // Table created
-  return fakeData.forEach(row => {
-    House.create(row);
-  })
+// House.sync({force: true}).then(() => {
+//   // Table created
+//   return fakeData.forEach(row => {
+//     House.create(row);
+//   })
 
-});
+// });
 
 module.exports = House;
