@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Address from './address.jsx';
 import HouseStats from './houseStats.jsx';
 import Description from './description.jsx';
+import Price from './price.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,9 +24,10 @@ class App extends React.Component {
         <div id='houseDescription'>
           <Address house={this.state.house} />
           <HouseStats />
-          <Description house={this.state.house}/>
+          <Description house={this.state.house} />
         </div>
         <div id='housePrice'>
+          <Price />
         </div>
       </div>
     )
