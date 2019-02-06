@@ -4,7 +4,7 @@
   "description": "zillow clone",
   "main": "index.js",
   "scripts": {
-    "test": "",
+    "test:db": "node_modules/.bin/mocha test/database-test.js",
     "start": "nodemon server/index.js",
     "build": "webpack -d --watch",
     "seed-db": "node database/seed-database.js"

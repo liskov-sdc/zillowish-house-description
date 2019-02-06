@@ -40,33 +40,18 @@ describe('Database Seeding', () => {
     expect(Object.keys(house[0])).to.deep.equal(['id', 'street', 'city', 'state', 'zipcode', 'description', 'price']);
   });
 
-  it('Should have a numeric value price', () => {
+  it('Should have a valid datatypes for each column', () => {
     expect(house[0].price).to.be.a('number');
-  });
-
-  it('Should have a numeric id', () => {
     expect(house[0].id).to.be.a('number');
-  });
-
-  it('Should have a string value for street', () => {
     expect(house[0].street).to.be.a('string');
-  });
-
-  it('Should have a string value for city', () => {
     expect(house[0].city).to.be.a('string');
-  });
-
-  it('Should have a string value for state', () => {
     expect(house[0].state).to.be.a('string');
-  });
-
-  it('Should have a string value for zipcode', () => {
     expect(house[0].zipcode).to.be.a('string');
-  });
-
-  it('Should have a string value for description', () => {
     expect(house[0].description).to.be.a('string');
   });
 
-});
+  after(() => {
+    sequelize.close();
+  })
 
+});
