@@ -6,7 +6,7 @@
   "scripts": {
     "test": "",
     "start": "nodemon server/index.js",
-    "react-dev": "webpack -d --watch",
+    "build": "webpack -d --watch",
     "seed-db": "node database/seed-database.js"
   },
   "author": "sadie gill",
