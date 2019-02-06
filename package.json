@@ -4,9 +4,10 @@
   "description": "zillow clone",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "",
     "start": "nodemon server/index.js",
-    "react-dev": "webpack -d --watch"
+    "react-dev": "webpack -d --watch",
+    "seed-db": "node database/seed-database.js"
   },
   "author": "sadie gill",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "webpack-cli": "^3.2.1"
   },
   "devDependencies": {
-    "faker": "^4.1.0"
+    "faker": "^4.1.0",
+    "mocha": "^5.2.0"
   }
 }
