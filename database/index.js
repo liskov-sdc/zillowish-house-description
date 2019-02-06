@@ -37,6 +37,6 @@ const House = sequelize.define('house', {
   price: {
     type: Sequelize.INTEGER
   }
-});
+}, {timestamps: false});
 
 module.exports = House;
