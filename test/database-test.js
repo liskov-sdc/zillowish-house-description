@@ -19,13 +19,12 @@ const sequelize = new Sequelize('zillow', 'postgres', password, {
 
 describe('Database Seeding', () => {
 
-  var house;
+  let house;
 
-  before((done) => {
-    sequelize.query('select * from houses limit 1;', { type: sequelize.QueryTypes.SELECT })
+  before(async () => {
+    await sequelize.query('select * from houses limit 1;', { type: sequelize.QueryTypes.SELECT })
       .then(data => {
         house = data;
-        done()
       })
   });
 
