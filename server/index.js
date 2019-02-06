@@ -11,4 +11,4 @@ app.get('/houses', (req, res) => {
   House.findAll().then(data => {
     res.send(data)
   });
-})
+});
