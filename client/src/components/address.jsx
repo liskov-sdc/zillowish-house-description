@@ -1,10 +1,11 @@
 import React from 'react';
+import AddressStyle from './styledComponents/address.style.js';
 
 function Address(props) {
   return(
     <div id='address'>
-      <div id='street'>{props.house.street}</div>
-      <div id='cityStateZip'>{props.house.city}, {props.house.state} {props.house.zipcode}</div>
+      <AddressStyle.Street>{props.house.street}</AddressStyle.Street>
+      <AddressStyle.CityStateZip>{props.house.city}, {props.house.state} {props.house.zipcode}</AddressStyle.CityStateZip>
     </div>
   )
 }

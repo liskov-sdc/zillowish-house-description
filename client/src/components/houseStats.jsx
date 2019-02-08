@@ -1,5 +1,5 @@
 import React from 'react';
-import HouseStat from './styledComponents/houseStat.js';
+import HouseStat from './styledComponents/houseStat.style.js';
 
 function Dot() {
   return (
