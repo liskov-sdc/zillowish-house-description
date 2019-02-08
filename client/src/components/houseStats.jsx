@@ -1,21 +1,22 @@
 import React from 'react';
+import HouseStat from './styledComponents/houseStat.js';
 
-function HouseStats() {
+function Dot() {
+  return (
+    <svg height="10" width="10">
+      <rect x="3" y="3" width="3" height="3" fill="#000" />
+    </svg>
+  )
+}
+
+function HouseStats(props) {
   return (
     <div id="houseStats">
-      <div className='stat'>4 beds</div>
-      <span>
-        <svg height="10" width="10">
-          <rect x="3" y="3" width="3" height="3" fill="#000" />
-        </svg>
-      </span>
-      <div className='stat'>3 baths</div>
-      <span>
-        <svg height="10" width="10">
-          <rect x="3" y="3" width="3" height="3" fill="#000" />
-        </svg>
-      </span>
-      <div className='stat'>2,848 sqft</div>
+      <HouseStat>{props.beds} beds</HouseStat>
+      <span><Dot/></span>
+      <HouseStat>{props.bats} baths</HouseStat>
+      <span><Dot/></span>
+      <HouseStat>{props.sqft} sqft</HouseStat>
     </div>
   )
 }

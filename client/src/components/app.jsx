@@ -12,7 +12,10 @@ class App extends React.Component {
 
     this.state = {
       id: 99,
-      house: {}
+      house: {},
+      beds: 4,
+      baths: 3,
+      sqft: 2789
     }
   }
 
@@ -57,7 +60,7 @@ class App extends React.Component {
         <div id='addressPrice'>
           <div id='addressStats'>
             <Address house={this.state.house} />
-            <HouseStats />
+            <HouseStats beds={this.state.beds} baths={this.state.baths} sqft={this.state.sqft}/>
           </div>
           <div id='housePrice'>
             <Price />
