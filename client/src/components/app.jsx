@@ -4,23 +4,56 @@ import Address from './address.jsx';
 import HouseStats from './houseStats.jsx';
 import Description from './description.jsx';
 import Price from './price.jsx';
+import $ from 'jquery';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      house: {
-        street: '2091 Califronia St.',
-        city: 'Berkeley', state: 'CA', zipcode: '94703',
-        description: "Est nostrum rerum voluptatem quas voluptas sunt est qui error. Repellat sed consequatur harum eligendi. Dolor accusamus facilis corrupti illo.\n \rNam repellat dolorem et rem delectus vel ut. Alias suscipit cumque asperiores itaque voluptas et fuga. Blanditiis earum assumenda atque cupiditate veritatis. At minus corrupti."
-      }
+      id: 99,
+      house: {}
     }
+  }
+
+  componentDidMount() {
+    $.get(`/houses/${this.state.id}`, (data) => {
+      let house = data[0];
+      this.setState({
+        house: {
+          street: house.street,
+          city: house.city,
+          state: house.state,
+          zipcode: house.zipcode,
+          description: house.description
+        }
+      });
+    })
+  }
+
+  componentDidUpdate() {
+    $.get(`/houses/${this.state.id}`, (data) => {
+      let house = data[0];
+      this.setState({
+        house: {
+          street: house.street,
+          city: house.city,
+          state: house.state,
+          zipcode: house.zipcode,
+          description: house.description
+        }
+      });
+    })
+  }
+
+  onIdChange(event) {
+    this.setState({id: event.target.value});
   }
 
   render() {
     return (
       <div id='houseSummary'>
+      <input onChange={this.onIdChange.bind(this)}></input>
         <div id='addressPrice'>
           <div id='addressStats'>
             <Address house={this.state.house} />
