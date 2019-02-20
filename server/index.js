@@ -14,6 +14,12 @@ app.get('/houses/:id', (req, res) => {
   House.findAll(
     {where: {id: req.params.id}}
   ).then(data => {
-    res.send(data)
+    res.status(200).send(data)
+  })
+  .catch(err => {
+    console.error(err);
+    res.status(404).send()
   });
 });
+
+module.exports = app; // make available for testing
