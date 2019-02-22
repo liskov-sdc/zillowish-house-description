@@ -33,10 +33,16 @@ const House = sequelize.define('house', {
   },
   description: {
     type: Sequelize.TEXT
-  },
-  price: {
-    type: Sequelize.INTEGER
   }
 }, {timestamps: false});
 
-module.exports = House;
+const Price = sequelize.define('price', {
+  price: {
+    type: Sequelize.INTEGER
+  }
+}, {timestamps: false})
+
+// House.hasOne(Price);
+// Price.belongsTo(House);
+
+module.exports = {House, Price};
