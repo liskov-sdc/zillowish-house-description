@@ -21,7 +21,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    $.get(`/houses/${this.state.id}`, (data) => {
+    $.get(`http://localhost:3001/houses/${this.state.id}`, (data) => {
       let house = data[0];
       this.setState({
         house: {
@@ -36,7 +36,7 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    $.get(`/houses/${this.state.id}`, (data) => {
+    $.get(`http://localhost:3001/houses/${this.state.id}`, (data) => {
       let house = data[0];
       this.setState({
         house: {

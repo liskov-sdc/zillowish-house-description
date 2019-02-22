@@ -3,10 +3,12 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 3001
 const House = require('./../database/index.js')
+const cors = require('cors')
 
 app.use(express.static(__dirname + '/./../client/dist'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors({origin:"http://localhost:3000"}))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
