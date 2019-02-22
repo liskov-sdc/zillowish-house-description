@@ -10,6 +10,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+app.get('/:id', (req, res) => {
+  res.send(`${req.params.id}`)
+})
+
 app.get('/houses/:id', (req, res) => {
   House.findAll(
     {where: {id: req.params.id}}
