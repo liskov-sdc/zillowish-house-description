@@ -12,15 +12,12 @@ app.use(cors({origin:"http://localhost:3000"}))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-app.get('/:id', (req, res) => {
-  res.send(`${req.params.id}`)
-})
 
 app.get('/houses/:id', (req, res) => {
   House.findAll(
     {where: {id: req.params.id}}
   ).then(data => {
-    res.status(200).send(data)
+    res.status(200).send(data);
   })
   .catch(err => {
     console.error(err);
