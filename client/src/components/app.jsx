@@ -11,7 +11,6 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      id: 99,
       house: {},
       beds: 4,
       baths: 3,
@@ -33,33 +32,17 @@ class App extends React.Component {
           description: house.description
         }
       });
-    })
-  }
 
-  componentDidUpdate() {
-    let id = window.location.pathname.split('/')[1]; //revise
-    $.get(`http://localhost:3001/houses/${id}`, (data) => {
-      let house = data[0];
-      this.setState({
-        house: {
-          street: house.street,
-          city: house.city,
-          state: house.state,
-          zipcode: house.zipcode,
-          description: house.description
-        }
+      $.get(`http://localhost:3001/prices/${id}`, (data) => {
+        this.setState({price: data[0].price})
       });
-    })
-  }
 
-  onIdChange(event) {
-    this.setState({id: event.target.value});
+    });
   }
 
   render() {
     return (
       <div id='houseSummary'>
-      <input onChange={this.onIdChange.bind(this)}></input>
         <div id='addressPrice'>
           <div id='addressStats'>
             <Address house={this.state.house} />
