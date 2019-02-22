@@ -17,7 +17,17 @@ const sequelize = new Sequelize('zillow', 'postgres', password, {
   },
 });
 
-describe('Database Seeding', () => {
+xdescribe('Database Seeding', () => {
+  it('Should have 100 records in the house table', () => {
+    sequelize.query('select count(*) from houses;', { type: sequelize.QueryTypes.SELECT })
+      .then(count => {
+        expect(count[0].count).to.equal('100');
+      })
+      .done()
+  });
+})
+
+describe('Database', () => {
 
   let house;
 
@@ -26,14 +36,6 @@ describe('Database Seeding', () => {
       .then(data => {
         house = data;
       })
-  });
-
-  it('Should have 100 records in the house table', () => {
-    sequelize.query('select count(*) from houses;', { type: sequelize.QueryTypes.SELECT })
-      .then(count => {
-        expect(count[0].count).to.equal('100');
-      })
-      .done()
   });
 
   it('Should have records with correct columns in the house table', () => {

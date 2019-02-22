@@ -19,7 +19,6 @@ describe('Testing API', () => {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
         expect(res.body[0].id).to.equal(1);
-        expect(Object.keys(res.body[0])).to.eql(['id', 'street', 'city', 'state', 'zipcode', 'description', 'price'])
         done();
       })
   })
