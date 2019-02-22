@@ -62,7 +62,7 @@ function Price(props) {
           for sale
         </ForSale>
         <PriceStyle>${props.price}</PriceStyle>
-        <Zestimate>Zestimate: ${props.price * 1.2}</Zestimate>
+        <Zestimate>Zestimate: ${Math.ceil(props.price * 1.2)}</Zestimate>
       </div>
       <div>
         <EstMortTitle>est. mortgage</EstMortTitle>
