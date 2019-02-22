@@ -9,9 +9,23 @@ chai.use(chaiHttp);
 
 describe('Testing API', () => {
 
-  it("should get house using house's id", () => {
+  it("should get house description using house's id", () => {
     chai.request(app)
       .get('/houses/1')
+      .end(function(err, res) {
+        if (err) {
+          console.error(err);
+        }
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body[0].id).to.equal(1);
+        done();
+      })
+  })
+
+  it("should get price for a house using house's id", () => {
+    chai.request(app)
+      .get('/prices/1')
       .end(function(err, res) {
         if (err) {
           console.error(err);
