@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const password = require('./../config.js');
+const config = require('./../config.js');
 
-const sequelize = new Sequelize('zillow', 'postgres', password, {
+const sequelize = new Sequelize('zillow', config.username, config.password, {
   host: 'localhost',
   dialect: 'postgres',
   operatorsAliases: false,
