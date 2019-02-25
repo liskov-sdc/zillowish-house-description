@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Address from './address.jsx';
 import HouseStats from './houseStats.jsx';
-import Description from './description.jsx';
+import HouseDescription from './houseDescription.jsx';
 import Price from './price.jsx';
 import $ from 'jquery';
 
@@ -53,7 +53,7 @@ class App extends React.Component {
           </div>
         </div>
         <div id='houseDescription'>
-          <Description house={this.state.house} />
+          <HouseDescription house={this.state.house} />
         </div>
       </div>
     )
