@@ -1,5 +1,8 @@
 # Getting Started with sadie's zillowish
 
+This application was developed using node v 10.13.0 and PostgreSQL 11.1
+Make sure to have nodemon installed as well.
+
 ## Seed Database
 1. clone this repo
 2. navigate to the repo's directory on your machine and in a terminal run `npm install`
