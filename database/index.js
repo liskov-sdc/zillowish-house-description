@@ -45,4 +45,4 @@ const Price = sequelize.define('price', {
 // House.hasOne(Price);
 // Price.belongsTo(House);
 
-module.exports = {House, Price};
+module.exports = {House, Price, sequelize};
