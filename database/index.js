@@ -17,7 +17,9 @@ const sequelize = new Sequelize('zillow', config.username, config.password, {
 const House = sequelize.define('house', {
   id: {
     type: Sequelize.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false
   },
   street: {
     type: Sequelize.STRING
@@ -37,12 +39,17 @@ const House = sequelize.define('house', {
 }, {timestamps: false});
 
 const Price = sequelize.define('price', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   price: {
     type: Sequelize.INTEGER
   }
-}, {timestamps: false})
+}, { timestamps: false })
 
 // House.hasOne(Price);
 // Price.belongsTo(House);
 
-module.exports = {House, Price, sequelize};
+module.exports = { House, Price, sequelize };

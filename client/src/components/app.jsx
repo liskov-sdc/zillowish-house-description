@@ -33,7 +33,7 @@ class App extends React.Component {
           description: house.description
         }
       });
-
+        // refactor this with 
       $.get(`http://localhost:3001/prices${id}`, (data) => {
         this.setState({price: data[0].price})
       });

@@ -27,6 +27,7 @@ app.get('/houses/:id', (req, res) => {
   });
 });
 
+// THIS ENDPOINT WILL NEED REFACTORING AFTER MYSQL MIGRATION
 app.get('/prices/:id', (req, res) => {
   db.Price.findAll(
     {where: {id: req.params.id}}
