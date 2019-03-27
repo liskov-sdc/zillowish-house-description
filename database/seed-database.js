@@ -4,14 +4,13 @@ const db = require('./mysql.js');
 const getMinutes = (millis) => {
   let minutes = Math.floor((millis / 60000));
   let seconds = ((millis % 60000) / 1000).toFixed(0);
-  return `${minutes}:${(seconds < 10) ? '0': ''}${seconds} `
+  return `${minutes}:${(seconds < 10) ? '0': ''}${seconds}`;
 }
 
-console.time('seed')
 const houseData = fakeHouseData(10000000);
 db.schema.dropTableIfExists('houses').then((exists) => {
   return db.schema.createTable('houses', (t) => {
-    t.increments('id').primary();
+    t.increments('id').primary().notNullable().unique().index();
     t.string('street', 255);
     t.string('city', 255);
     t.string('state', 2);
@@ -19,7 +18,7 @@ db.schema.dropTableIfExists('houses').then((exists) => {
     t.text('description');
     t.integer('price');
   }).then(() => {
-    let houseData = fakeHouseData(10000000);
+    // let houseData = fakeHouseData(10000000);
     let chunk = 1000;
     let start = Date.now();
 
@@ -32,7 +31,6 @@ db.schema.dropTableIfExists('houses').then((exists) => {
       let end = Date.now() - start;
       let totalTime = getMinutes(end);
       console.log(`SUCCESS it took ${totalTime}`);
-      console.log('FOUND RESULT', result);
     })
     .catch((error) => {
       console.error('NOT ABLE TO SEED DB', error);
@@ -43,7 +41,6 @@ db.schema.dropTableIfExists('houses').then((exists) => {
 }).catch((error) => {
   console.error('COULD NOT DROP Database', error);
 });
-console.timeEnd('seed')
 
 module.exports = db;
 
