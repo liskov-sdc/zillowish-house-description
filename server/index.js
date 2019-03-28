@@ -18,26 +18,29 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 app.get('/houses/:id', (req, res) => {
   const { id } = req.params;
-  db.select('*').from('houses').where('id', id)
+  db.select('street','city','state','zipcode', 'description')
+    .from('houses')
+    .where('id', id)
     .then((response) => {
-      console.log('SUCCESS Here the House data:', response);
-      res.end();
+      console.log('SUCCESS Here the House data:', response[0]);
+      res.status(200).json(response)
     })
     .catch((error) => {
       console.error('unable to perform query in server', error);
     });
-});
+  });
 
-// THIS ENDPOINT WILL NEED REFACTORING AFTER MYSQL MIGRATION
-app.get('/prices/:id', (req, res) => {
-  const { id } = req.params;
-  db.select('price').from('houses').where('id', id)
-    .then((response) => {
-      console.log('SUCCESS Here the House data:', response);
-      res.end();
+  // THIS ENDPOINT WILL NEED REFACTORING AFTER MYSQL MIGRATION
+  app.get('/prices/:id', (req, res) => {
+    const { id } = req.params;
+    db.select('price').from('houses').where('id', id)
+      .then((response) => {
+      console.log('SUCCESS Here the pricee data:', response);
+      res.status(200).json(response);
     })
     .catch((error) => {
       console.error('unable to perform query in server', error);
+      res.status(404).send('Error in prices route')
     });
 });
 

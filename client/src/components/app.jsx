@@ -8,7 +8,7 @@ import $ from 'jquery';
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       house: {},
@@ -21,23 +21,22 @@ class App extends React.Component {
 
   componentDidMount() {
     let id = window.location.pathname;
-    (id === '/') ? id = 1 : id; //revise
+    (id === '/') ? id = 1 : id;
     $.get(`http://localhost:3001/houses${id}`, (data) => {
-      let house = data[0];
+      let { street, city, state, zipcode, description } = data[0];
       this.setState({
         house: {
-          street: house.street,
-          city: house.city,
-          state: house.state,
-          zipcode: house.zipcode,
-          description: house.description
+          street,
+          city,
+          state,
+          zipcode,
+          description
         }
       });
-        // refactor this with 
       $.get(`http://localhost:3001/prices${id}`, (data) => {
-        this.setState({price: data[0].price})
+        const { price } = data[0];
+        this.setState({ price });
       });
-
     });
   }
 
