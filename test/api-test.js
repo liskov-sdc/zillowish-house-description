@@ -39,7 +39,7 @@ describe('Testing API', () => {
 
   it("should produce an error with incorrect house id", () => {
     chai.request(app)
-      .get('/houses/200')
+      .get('/houses/20000000')
       .end((err, res) => {
         expect(res).to.have.status(404);
         done();
