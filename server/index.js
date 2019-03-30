@@ -18,9 +18,9 @@ app.get('/houses/:id', (req, res) => {
   db.select('street','city','state','zipcode','description')
     .from('houses')
     .where('id', id)
-    .then((response) => {
-      console.log('SUCCESS Here the House data: ', response[0]);
-      res.status(200).json(response);
+    .then((house) => {
+      console.log('SUCCESS Here the House data: ', house[0]);
+      (house.length < 1) ? res.sendStatus(404) : res.status(200).json(house);
     })
     .catch((error) => {
       console.error('unable to perform query in server', error);
@@ -38,7 +38,7 @@ app.post('/houses/:id', (req, res) => {
     })
     .catch((error) => {
       console.error('Error adding new House record', error);
-      res.sendStatus()
+      res.sendStatus(404).end();
     });
 });
 
@@ -47,7 +47,7 @@ app.get('/prices/:id', (req, res) => {
   db.select('price').from('houses')
     .where('id', id)
     .then((response) => {
-    console.log('SUCCESS Here the price data: ', response);
+    console.log('SUCCESS Here is the price data: ', response);
     res.status(200).json(response);
   })
   .catch((error) => {
