@@ -34,11 +34,7 @@ const fakeHouseData = (rounds=100) => {
   }
   return results;
 };
-// [...Array(rounds).keys()].map(() => makeHouseEntry());
-// const houseData = fakeHouseData(200);
-// const priceData = fakePriceData(200);
-// console.log(houseData);
-// console.log(priceData);
+
 
 
 module.exports = fakeHouseData;

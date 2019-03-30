@@ -44,4 +44,4 @@ db.once('open', () => {
 });
 
 
-module.exports = House;
+// module.exports = House;
