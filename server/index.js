@@ -5,7 +5,6 @@ const cors = require('cors');
 const db = require('./../database/mysql.js');
 const port = 3001;
 
-
 app.use(cors());
 app.use('/', express.static(__dirname + '/./../client/dist'));
 app.use('/:id', express.static(__dirname + '/./../client/dist'));
@@ -70,7 +69,7 @@ app.delete('/houses/:id', (req, res) => {
   VALUES (?,?,?,?,?,?,?)`;
   db.raw(qs, params)
     .then((response) => {
-      console.log('Found response in delete request', response)
+      console.log('Found response in delete request', response);
       res.status(200).send('Succesfully deleted record');
     })
     .catch((error) => {
