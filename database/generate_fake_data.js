@@ -26,7 +26,6 @@ const makeHouseEntry = () => {
   return house;
 }
 
-
 const fakeHouseData = (rounds=100) => {
   let results = [];
   for (let i = 0; i < rounds; i++) {
@@ -34,7 +33,6 @@ const fakeHouseData = (rounds=100) => {
   }
   return results;
 };
-
 
 
 module.exports = fakeHouseData;
