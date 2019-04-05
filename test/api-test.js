@@ -59,24 +59,57 @@ describe('Testing API', () => {
   });
 
   it('should add a record to the database', (done) => {
+    let house = {
+      street: '8837 Red Leaf Road',
+      city:'Bloomington',
+      state: 'IN',
+      description: 'Reiciendis repellat aut optio consequatur enim iure laboriosam est aliquam. Explicabo placeat minus labore illum et',
+      price: 8372625
+    }
+
     chai.request(app)
-    .post('/houses/5')
-    .end((err, res) => {
-      if (err) {
-        console.error(err);
-      }
-      expect(res).to.have.status(201);
-      done();
-    })
+      .post('/houses/5')
+      .send(house)
+      .end((err, res) => {
+        if (err) {
+          console.error(err);
+        }
+        expect(res).to.have.status(201);
+        done();
+      });
   });
 
   it('should update a house record', (done) => {
-    // need to fill in 
-    done();
+    let house = {
+      street: '8837 Blue Rose Road',
+      city:'Bloomington',
+      state: 'IN',
+      description: 'Reiciendis repellat aut optio consequatur enim iure laboriosam est aliquam. Explicabo placeat minus labore illum et.  In iure aut molestias corrupti minus aliquid est. Dicta maiores quo esse quis debitis dolore.',
+      price: 938272
+    }
+
+    chai.request(app)
+      .put('/houses/89')
+      .send(house)
+      .end((err,res) => {
+        if (err) {
+          console.error('Error in update route', err);
+        }
+        expect(res).to.have.status(202);
+        done();
+      });
   });
 
   it('should delete a record from the database', (done) => {
-    // need to fill in
-    done();
+    chai.request(app)
+      .delete('/houses/9120')
+      .end((err, res) => {
+        if (err) {
+          console.error('Error in update route', err);
+        }
+        expect(res).to.have.status(200);
+        expect(res.text).to.equal('succesfully deleted record')
+        done();
+      });
   });
 })

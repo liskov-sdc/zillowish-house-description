@@ -31,7 +31,6 @@ app.get('/houses/:id', (req, res) => {
 
 app.post('/houses/:id', (req, res) => {
   const { body } = req;
-  console.log('Current id', id);
   db('houses')
     .insert(body, ['id'])
     .then((response) => {
@@ -70,7 +69,7 @@ app.delete('/houses/:id', (req, res) => {
   db.raw(qs, params)
     .then((response) => {
       console.log('Found response in delete request', response);
-      res.status(200).send('Succesfully deleted record');
+      res.status(200).send('succesfully deleted record')
     })
     .catch((error) => {
       console.error('unable to delete record', error);
