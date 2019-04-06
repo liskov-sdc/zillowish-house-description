@@ -91,7 +91,7 @@ describe('Testing API', () => {
     chai.request(app)
       .put('/houses/89')
       .send(house)
-      .end((err,res) => {
+      .end((err, res) => {
         if (err) {
           console.error('Error in update route', err);
         }
@@ -109,7 +109,39 @@ describe('Testing API', () => {
         }
         expect(res).to.have.status(200);
         expect(res.text).to.equal('succesfully deleted record')
+        // add GET request here to check for the db request
+
         done();
       });
   });
-})
+
+  it('should update price data', (done) => {
+    let newPrice = {
+      price: 1484800
+    };
+    var formerPrice;
+    // GET request for initial price data
+    chai.request(app)
+      .get('/prices/5000')
+      .end((err, res) => {
+        if (err) {
+          console.error('could not GET price data', err);
+        }
+        formerPrice = res.body[0].price;
+        expect(formerPrice).to.be.a('number');
+        expect(formerPrice).to.be.lessThan(newPrice.price);
+      });
+    // PUT request
+    chai.request(app)
+      .put('/prices/5000')
+      .send(newPrice)
+      .end((err, res) => {
+        if (err) {
+          console.error('Error in update route', err);
+        }
+        newPrice.price++;
+        expect(res).to.have.status(202);
+        done();
+      });
+  });
+});
