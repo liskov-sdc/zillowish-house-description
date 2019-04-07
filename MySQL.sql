@@ -8,7 +8,9 @@ CREATE TABLE houses (
   city varchar(255),
   state varchar(5),
   zipcode varchar(10),
-  description text
+  description text,
   price INT
 );
 
+CREATE INDEX idx_id
+ON houses (id);
