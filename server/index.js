@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -34,7 +35,6 @@ app.post('/houses/:id', (req, res) => {
   db('houses')
     .insert(body, ['id'])
     .then((response) => {
-      console.log('Found the response', response);
       res.sendStatus(201);
     })
     .catch((error) => {
@@ -46,12 +46,10 @@ app.post('/houses/:id', (req, res) => {
 app.put('/houses/:id', (req, res) => {
   const { id } = req.params;
   const { body } = req;
-  console.log('here is the id', id);
   db('houses')
     .update(body, ['id'])
     .where('id', id)
     .then((response) => {
-      console.log('Updated changes', response);
       res.sendStatus(202);
     })
     .catch((error) => {

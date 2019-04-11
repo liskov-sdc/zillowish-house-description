@@ -1,4 +1,4 @@
-let fakeHouseData  = require('./generate_fake_data.js');
+let { fakeHouseData }  = require('./generate_fake_data.js');
 const db = require('./mysql.js');
 let entries = 0;
 let completions = 0;
@@ -53,4 +53,3 @@ db.schema.dropTableIfExists('houses').then((exists) => {
 });
 
 module.exports = db;
-

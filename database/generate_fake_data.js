@@ -35,4 +35,4 @@ const fakeHouseData = (rounds=100) => {
 };
 
 
-module.exports = fakeHouseData;
+module.exports = { fakeHouseData, getRandomInt, makeHouseEntry, grabRandomItem };
