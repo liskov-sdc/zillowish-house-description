@@ -1,4 +1,5 @@
 module.exports = {
+  mode: "production",
   entry: __dirname + '/client/src/components/app.jsx',
   module: {
     rules: [

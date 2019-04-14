@@ -10,13 +10,14 @@ function Dot() {
 }
 
 function HouseStats(props) {
+  const { beds, baths, sqft } = props;
   return (
     <div id="houseStats">
-      <HouseStat>{props.beds} beds</HouseStat>
+      <HouseStat>{beds} beds</HouseStat>
       <span><Dot/></span>
-      <HouseStat>{props.bats} baths</HouseStat>
+      <HouseStat>{baths} baths</HouseStat>
       <span><Dot/></span>
-      <HouseStat>{props.sqft} sqft</HouseStat>
+      <HouseStat>{sqft} sqft</HouseStat>
     </div>
   )
 }

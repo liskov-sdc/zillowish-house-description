@@ -1,29 +1,38 @@
-const faker = require('faker');
+const { addresses, cities, states, descriptions } = require('./dataStorage.js');
 
-function makeHouseEntry(id) {
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+};
 
-  let house = {
-    id: id,
-    street: faker.address.streetAddress(),
-    city: faker.address.city(),
-    state: faker.address.stateAbbr(),
-    zipcode: faker.address.zipCode(),
-    description: faker.lorem.paragraphs(2)
+const grabRandomItem = (array) => {
+  if (array.length < 1) {
+    return '';
+  } else {
+    return array[Math.floor((Math.random() * array.length))];
   }
+};
 
-  return house;
-
-}
-
-function makePriceEntry(id) {
-  let price = {
-    id: id,
-    price: faker.commerce.price(200000, 2000000, 0)
+const makeHouseEntry = () => {
+  let house = {
+    street: grabRandomItem(addresses),
+    city: grabRandomItem(cities),
+    state: grabRandomItem(states),
+    zipcode: JSON.stringify(getRandomInt(10000, 99999)),
+    description: grabRandomItem(descriptions),
+    price: getRandomInt(2000000, 20000000),
   };
-  return price;
+  return house;
 }
 
-let fakeHouseData = [...Array(100).keys()].map(x => ++x).map(id => makeHouseEntry(id));
-let fakePriceData = [...Array(100).keys()].map(x => ++x).map(id => makePriceEntry(id));
+const fakeHouseData = (rounds=100) => {
+  let results = [];
+  for (let i = 0; i < rounds; i++) {
+    results.push(makeHouseEntry());
+  }
+  return results;
+};
 
-module.exports = { fakeHouseData, fakePriceData };
+
+module.exports = { fakeHouseData, getRandomInt, makeHouseEntry, grabRandomItem };
