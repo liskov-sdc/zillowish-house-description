@@ -20,8 +20,9 @@ app.get('/houses/:id', (req, res) => {
   db.select('street','city','state','zipcode','description')
     .from('houses')
     .where('id', id)
+    .first()//returns one object instead of an array of objects
     .then((house) => {
-      console.log('SUCCESS Here the House data: ', house[0]);
+      console.log('SUCCESS Here the House data: ', house);
       (house.length < 1) ? res.sendStatus(404) : res.status(200).json(house);
     })
     .catch((error) => {
@@ -81,6 +82,7 @@ app.get('/prices/:id', (req, res) => {
   const { id } = req.params;
   db.select('price').from('houses')
     .where('id', id)
+    .first()
     .then((response) => {
     console.log('SUCCESS Here is the price data: ', response);
     res.status(200).json(response);

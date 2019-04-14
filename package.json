@@ -8,6 +8,7 @@
     "test:api": "node_modules/.bin/mocha test/api-test.js",
     "start": "nodemon server/index.js",
     "build": "webpack -d --watch",
+    "prod": "webpack -p",
     "seed-db": "node database/seed-database.js"
   },
   "author": "sadie gill",

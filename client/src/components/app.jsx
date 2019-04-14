@@ -23,7 +23,7 @@ class App extends React.Component {
     let id = window.location.pathname;
     (id === '/') ? id = 1 : id;
     $.get(`http://localhost:3001/houses${id}`, (data) => {
-      let { street, city, state, zipcode, description } = data[0];
+      let { street, city, state, zipcode, description } = data;
       this.setState({
         house: {
           street,
@@ -34,7 +34,7 @@ class App extends React.Component {
         }
       });
       $.get(`http://localhost:3001/prices${id}`, (data) => {
-        const { price } = data[0];
+        const { price } = data;
         this.setState({ price });
       });
     });
