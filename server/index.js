@@ -42,6 +42,19 @@ app.get('/houses/:id', (req, res) => {
   });
 });
 
+app.post('/houses/:id', (req, res) => {
+  const { body } = req;
+  db('houses')
+    .insert(body, ['id'])
+    .then((response) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.error('Error adding new House record', error);
+      res.sendStatus(404).end();
+    });
+});
+
 app.put('/houses/:id', (req, res) => {
   const { id } = req.params;
   const { body } = req;
