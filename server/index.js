@@ -21,15 +21,13 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 // CRUD operations for "houses" endpoint
 app.get('/houses/:id', (req, res) => {
   const { id } = req.params;
-  console.time('cache')
   let cachedPromise = houseCache.getOrSet(id, () => {
     return db.select('street','city','state','zipcode','description','price')
       .from('houses')
       .where('id', id)
-      .first()//returns one object instead of an array of objects
+      .first() //returns one object instead of an array of objects
       .then((house) => {
         return house;
-        // return res.status(200).json(house);
       })
       .catch((error) => {
         console.error('UNABLE TO GET DATA FROM DB', error);
@@ -37,30 +35,11 @@ app.get('/houses/:id', (req, res) => {
       });
   });
   cachedPromise.then((data) => {
-    console.timeEnd('cache');
-    console.log('CACHE DATA FROM GETORSET METHOD', data);
-    res.status(200).json(data)
+    res.status(200).json(data);
   }).catch((error) => {
     console.error('unable to perform query in server', error);
     res.status(404).send('Invalid id in houses route');
   });
-  // houseCache.get(id).then((data) => {
-  //   if (data) {
-  //     console.log('FOUND THE DATA IN REDIS CACHE', data);
-  //     return res.status(200).json(data);
-  //   }
-  // });
-  // db.select('street','city','state','zipcode','description','price')
-  //   .from('houses')
-  //   .where('id', id)
-  //   .first()//returns one object instead of an array of objects
-  //   .then((house) => {
-  //     houseCache.set(id, house).then(() => res.status(200).json(house));
-  //   })
-  //   .catch((error) => {
-  //     console.error('unable to perform query in server', error);
-  //     res.status(404).send('Invalid id in houses route');
-  //   });
 });
 
 app.put('/houses/:id', (req, res) => {
@@ -99,22 +78,23 @@ app.delete('/houses/:id', (req, res) => {
 //Update and Read operations for "prices" endpoint
 app.get('/prices/:id', (req, res) => {
   const { id } = req.params;
-  houseCache.get(id).then((data) => {
-    if (data) {
-      console.log('FOUND THE DATA IN REDIS CACHE', data);
-      return res.status(200).json(data);
-    }
-    db.select('price').from('houses')
+  let cachedPromise = houseCache.getOrSet(id, () => {
+    return db.select('price').from('houses')
       .where('id', id)
-      .first()
-      .then((response) => {
-      // console.log('SUCCESS Here is the price data: ', response);
-      res.status(200).json(response);
-    })
-    .catch((error) => {
-      console.error('unable to perform query in server', error);
-      res.status(404).send('Error in prices route');
-    });
+      .first()//returns one object instead of an array of objects
+      .then((house) => {
+        return house;
+      })
+      .catch((error) => {
+        console.error('UNABLE TO GET DATA FROM DB', error);
+        res.status(404).send('Invalid id in houses route');
+      });
+  });
+  cachedPromise.then((data) => {
+    res.status(200).json(data)
+  }).catch((error) => {
+    console.error('unable to perform query in server', error);
+    res.status(404).send('Invalid id in houses route');
   });
 });
 
@@ -124,8 +104,7 @@ app.put('/prices/:id', (req, res) => {
   db('houses')
     .update('price', price)
     .where('id', id)
-    .then((updatedRows) => {
-      // console.log('Here is the new row', updatedRows);
+    .then(() => {
       res.status(202).end();
     })
     .catch((error) => {
