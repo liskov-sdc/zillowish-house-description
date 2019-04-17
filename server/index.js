@@ -1,10 +1,14 @@
 require('newrelic');
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./../database/mysql.js');
-const port = 3001;
+const port = process.env.PORT;
+const redis = require('redis').createClient();
+let lru = require('redis-lru');
+let houseCache = lru(redis, {max: 10000, maxAge: 86400000}) // cache lasts for one day
 
 app.use(cors());
 app.use('/', express.static(__dirname + '/./../client/dist'));
@@ -17,31 +21,46 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 // CRUD operations for "houses" endpoint
 app.get('/houses/:id', (req, res) => {
   const { id } = req.params;
-  db.select('street','city','state','zipcode','description')
-    .from('houses')
-    .where('id', id)
-    .first()//returns one object instead of an array of objects
-    .then((house) => {
-      console.log('SUCCESS Here the House data: ', house);
-      (house.length < 1) ? res.sendStatus(404) : res.status(200).json(house);
-    })
-    .catch((error) => {
-      console.error('unable to perform query in server', error);
-      res.status(404).send('Invalid id in houses route');
-    });
-});
-
-app.post('/houses/:id', (req, res) => {
-  const { body } = req;
-  db('houses')
-    .insert(body, ['id'])
-    .then((response) => {
-      res.sendStatus(201);
-    })
-    .catch((error) => {
-      console.error('Error adding new House record', error);
-      res.sendStatus(404).end();
-    });
+  console.time('cache')
+  let cachedPromise = houseCache.getOrSet(id, () => {
+    return db.select('street','city','state','zipcode','description','price')
+      .from('houses')
+      .where('id', id)
+      .first()//returns one object instead of an array of objects
+      .then((house) => {
+        return house;
+        // return res.status(200).json(house);
+      })
+      .catch((error) => {
+        console.error('UNABLE TO GET DATA FROM DB', error);
+        res.status(404).send('Invalid id in houses route');
+      });
+  });
+  cachedPromise.then((data) => {
+    console.timeEnd('cache');
+    console.log('CACHE DATA FROM GETORSET METHOD', data);
+    res.status(200).json(data)
+  }).catch((error) => {
+    console.error('unable to perform query in server', error);
+    res.status(404).send('Invalid id in houses route');
+  });
+  // houseCache.get(id).then((data) => {
+  //   if (data) {
+  //     console.log('FOUND THE DATA IN REDIS CACHE', data);
+  //     return res.status(200).json(data);
+  //   }
+  // });
+  // db.select('street','city','state','zipcode','description','price')
+  //   .from('houses')
+  //   .where('id', id)
+  //   .first()//returns one object instead of an array of objects
+  //   .then((house) => {
+  //     houseCache.set(id, house).then(() => res.status(200).json(house));
+  //   })
+  //   .catch((error) => {
+  //     console.error('unable to perform query in server', error);
+  //     res.status(404).send('Invalid id in houses route');
+  //   });
 });
 
 app.put('/houses/:id', (req, res) => {
@@ -67,7 +86,7 @@ app.delete('/houses/:id', (req, res) => {
   VALUES (?,?,?,?,?,?,?)`;
   db.raw(qs, params)
     .then((response) => {
-      console.log('Found response in delete request', response);
+      // console.log('Found response in delete request', response);
       res.status(200).send('succesfully deleted record')
     })
     .catch((error) => {
@@ -80,16 +99,22 @@ app.delete('/houses/:id', (req, res) => {
 //Update and Read operations for "prices" endpoint
 app.get('/prices/:id', (req, res) => {
   const { id } = req.params;
-  db.select('price').from('houses')
-    .where('id', id)
-    .first()
-    .then((response) => {
-    console.log('SUCCESS Here is the price data: ', response);
-    res.status(200).json(response);
-  })
-  .catch((error) => {
-    console.error('unable to perform query in server', error);
-    res.status(404).send('Error in prices route');
+  houseCache.get(id).then((data) => {
+    if (data) {
+      console.log('FOUND THE DATA IN REDIS CACHE', data);
+      return res.status(200).json(data);
+    }
+    db.select('price').from('houses')
+      .where('id', id)
+      .first()
+      .then((response) => {
+      // console.log('SUCCESS Here is the price data: ', response);
+      res.status(200).json(response);
+    })
+    .catch((error) => {
+      console.error('unable to perform query in server', error);
+      res.status(404).send('Error in prices route');
+    });
   });
 });
 
@@ -100,7 +125,7 @@ app.put('/prices/:id', (req, res) => {
     .update('price', price)
     .where('id', id)
     .then((updatedRows) => {
-      console.log('Here is the new row', updatedRows);
+      // console.log('Here is the new row', updatedRows);
       res.status(202).end();
     })
     .catch((error) => {

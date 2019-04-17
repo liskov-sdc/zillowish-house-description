@@ -1,12 +1,12 @@
+require('dotenv').config();
 const mysql = require('mysql');
-const { password } = require('../config.js');
 
 const db = require('knex')({
   client: 'mysql',
   connection: {
-    host : 'localhost',
+    host : 'localhost', // replace before pushing up process.env.HOST,
     user : 'root',
-    password,
+    password: process.env.PASSWORD,
     database : 'zillowDescription'
   },
   pool: { min: 0, max: 10 }
