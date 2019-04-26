@@ -22,9 +22,9 @@ class App extends React.Component {
   componentDidMount() {
     let id = window.location.pathname;
     (id === '/') ? id = '/1' : id;
-    const houseUrl = `http://ec2-13-59-135-7.us-east-2.compute.amazonaws.com/houses${id}`
+    const houseUrl = `http://ec2-18-218-189-239.us-east-2.compute.amazonaws.com:3000/houses${id}`
     let localUrl = `http://localhost:3001/houses${id}`;
-    $.get(localUrl, (data) => {
+    $.get(houseUrl, (data) => {
       let { street, city, state, zipcode, description } = data;
       this.setState({
         house: {
@@ -35,9 +35,9 @@ class App extends React.Component {
           description
         }
       });
-      const pricesUrl = `http://ec2-13-59-135-7.us-east-2.compute.amazonaws.com/prices${id}`;
+      const pricesUrl = `http://ec2-18-218-189-239.us-east-2.compute.amazonaws.com:3000/prices${id}`;
       let localPriceUrl = `http://localhost:3001/prices${id}`;
-      $.get(localPriceUrl, (data) => {
+      $.get(pricesUrl, (data) => {
         const { price } = data;
         this.setState({ price });
       });

@@ -1,5 +1,5 @@
-require('newrelic');
-require('dotenv').config();
+// // require('newrelic');
+// require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -8,7 +8,7 @@ const db = require('./../database/mysql.js');
 const port = process.env.PORT;
 const redis = require('redis').createClient();
 let lru = require('redis-lru');
-let houseCache = lru(redis, {max: 10000, maxAge: 86400000}) // cache lasts for one day
+let houseCache = lru(redis, {max: 10000, maxAge: 86400000}); // cache lasts for one day
 
 app.use(cors());
 app.use('/', express.static(__dirname + '/./../client/dist'));
@@ -21,11 +21,12 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 // CRUD operations for "houses" endpoint
 app.get('/houses/:id', (req, res) => {
   const { id } = req.params;
+
   let cachedPromise = houseCache.getOrSet(id, () => {
     return db.select('street','city','state','zipcode','description','price')
       .from('houses')
       .where('id', id)
-      .first() //returns one object instead of an array of objects
+      .first() // returns one object instead of an array of objects
       .then((house) => {
         return house;
       })
